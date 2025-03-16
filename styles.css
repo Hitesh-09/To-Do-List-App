@@ -3,8 +3,8 @@
 /* Global Styles */
 body {
     font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Arial, sans-serif;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); /* Gradient Background */
-    color: #333333;
+    background-color: #2C2C2E; /* Gray background color */
+    color: #FFFFFF; /* Light text color for better contrast */
     margin: 0;
     padding: 0;
     display: flex;
@@ -21,12 +21,12 @@ header {
     text-align: left;
     font-size: 1.5rem; /* Reduced font size */
     font-weight: bold;
-    color: #333333;
+    color: #FFFFFF; /* Light text color for better contrast */
     border-bottom: 1px solid #E0E0E0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #FFFFFF;
+    background-color: #3A3A3C; /* Slightly lighter gray for header */
 }
 
 /* Navigation Bar */
@@ -64,27 +64,44 @@ h1 {
     width: 90%;
     max-width: 500px;
     padding: 1rem;
-    background: #2C2C2E;
+    background: #3A3A3C; /* Slightly lighter gray for container */
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
     margin-top: 1rem;
     box-sizing: border-box;
 }
 
+/* Sections */
+.section {
+    display: none;
+    width: 100%;
+    max-width: 500px;
+    padding: 1rem;
+    background: #3A3A3C; /* Slightly lighter gray for sections */
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    margin-top: 1rem;
+    box-sizing: border-box;
+}
+
+.section.active {
+    display: block;
+}
+
 /* Headings */
-h2 {
+h2, h3 {
     color: #FFFFFF; /* Lighter color for better contrast */
     margin-bottom: 0.5rem;
 }
 
 /* Input Field */
-input[type="text"], input[type="date"], select {
+input[type="text"], input[type="date"], input[type="time"], select {
     width: 100%;
     padding: 1rem;
     border: none;
     border-radius: 8px;
     font-size: 1rem;
-    background-color: #3A3A3C;
+    background-color: #48484A;
     color: white;
     outline: none;
     margin-bottom: 1rem;
@@ -96,8 +113,8 @@ input[type="text"]::placeholder {
     color: #8E8E93;
 }
 
-input[type="text"]:focus, input[type="date"]:focus, select:focus {
-    background-color: #48484A;
+input[type="text"]:focus, input[type="date"]:focus, input[type="time"]:focus, select:focus {
+    background-color: #5A5A5C;
 }
 
 /* Add Task Button */
@@ -132,7 +149,7 @@ ul {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #3A3A3C; /* Lighter background color for better contrast */
+    background-color: #48484A; /* Lighter background color for better contrast */
     padding: 1rem;
     margin-bottom: 1rem;
     border-radius: 8px;
@@ -192,7 +209,7 @@ button.edit-task:hover, button.delete-task:hover {
         padding: 0.5rem;
     }
 
-    input[type="text"], input[type="date"], select, button {
+    input[type="text"], input[type="date"], input[type="time"], select, button {
         padding: 0.75rem;
         font-size: 0.875rem;
     }

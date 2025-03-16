@@ -10,14 +10,23 @@
     <header>
         <nav>
             <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#tasks">Tasks</a></li>
-                <li><a href="#about">About</a></li>
+                <li><a href="#home" class="nav-link" data-section="home">Home</a></li>
+                <li><a href="#tasks" class="nav-link" data-section="tasks">Tasks</a></li>
+                <li><a href="#about" class="nav-link" data-section="about">About</a></li>
             </ul>
         </nav>
         <h1>To-Do List</h1>
     </header>
-    <div class="container">
+    <div id="home" class="section">
+        <h3>Work Tasks</h3>
+        <ul id="home-work-tasks"></ul>
+        <h3>Personal Tasks</h3>
+        <ul id="home-personal-tasks"></ul>
+        <h3>Shopping Tasks</h3>
+        <ul id="home-shopping-tasks"></ul>
+    </div>
+    <div id="tasks" class="section">
+        <h2>Tasks</h2>
         <input type="text" id="task-input" placeholder="Add a new task...">
         <select id="category-select">
             <option value="Work">Work</option>
@@ -25,14 +34,19 @@
             <option value="Shopping">Shopping</option>
         </select>
         <input type="date" id="due-date">
+        <input type="time" id="due-time">
         <button id="add-task">Add Task</button>
         <button id="enable-notifications">Enable Notifications</button>
-        <h2 id="work-heading">Work Tasks</h2>
+        <h3>Work Tasks</h3>
         <ul id="work-tasks"></ul>
-        <h2 id="personal-heading">Personal Tasks</h2>
+        <h3>Personal Tasks</h3>
         <ul id="personal-tasks"></ul>
-        <h2 id="shopping-heading">Shopping Tasks</h2>
+        <h3>Shopping Tasks</h3>
         <ul id="shopping-tasks"></ul>
+    </div>
+    <div id="about" class="section">
+        <h2>About</h2>
+        <p>This is a To-Do List App that allows users to add, edit, and delete tasks. Users can categorize tasks, set due dates, and mark tasks as completed. Tasks are stored in local storage so they persist across sessions. The app has a modern UI inspired by Apple's Notes app.</p>
     </div>
     <script src="script.js"></script>
 </body>

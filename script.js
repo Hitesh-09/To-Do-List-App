@@ -3,37 +3,41 @@ document.addEventListener("DOMContentLoaded", function () {
     const addTaskBtn = document.getElementById("add-task");
     const categorySelect = document.getElementById("category-select");
     const dueDateInput = document.getElementById("due-date");
+    const dueTimeInput = document.getElementById("due-time");
     const workTasks = document.getElementById("work-tasks");
     const personalTasks = document.getElementById("personal-tasks");
     const shoppingTasks = document.getElementById("shopping-tasks");
+    const homeWorkTasks = document.getElementById("home-work-tasks");
+    const homePersonalTasks = document.getElementById("home-personal-tasks");
+    const homeShoppingTasks = document.getElementById("home-shopping-tasks");
     let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-    function calculateTimeLeft(dueDate) {
+    function calculateTimeLeft(dueDate, dueTime) {
         const now = new Date();
-        const due = new Date(dueDate);
+        const due = new Date(`${dueDate}T${dueTime}`);
         const diff = due - now;
 
         if (diff <= 0) return "Overdue!";
         
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        return `${days} days, ${hours} hours left`;
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        return `${days} days, ${hours} hours, ${minutes} minutes left`;
     }
 
     function renderTasks() {
         workTasks.innerHTML = "";
         personalTasks.innerHTML = "";
         shoppingTasks.innerHTML = "";
-
-        let hasWorkTasks = false;
-        let hasPersonalTasks = false;
-        let hasShoppingTasks = false;
+        homeWorkTasks.innerHTML = "";
+        homePersonalTasks.innerHTML = "";
+        homeShoppingTasks.innerHTML = "";
 
         tasks.forEach((task, index) => {
             const li = document.createElement("li");
             li.classList.add("task-item");
 
-            const timeLeft = task.dueDate ? calculateTimeLeft(task.dueDate) : "No due date";
+            const timeLeft = task.dueDate && task.dueTime ? calculateTimeLeft(task.dueDate, task.dueTime) : "No due date";
             const isOverdue = timeLeft === "Overdue!" ? "overdue" : "";
 
             li.innerHTML = `
@@ -45,54 +49,32 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
 
             if (task.category === "Work") {
-                workTasks.appendChild(li);
-                hasWorkTasks = true;
+                workTasks.appendChild(li.cloneNode(true));
+                homeWorkTasks.appendChild(li);
             } else if (task.category === "Personal") {
-                personalTasks.appendChild(li);
-                hasPersonalTasks = true;
+                personalTasks.appendChild(li.cloneNode(true));
+                homePersonalTasks.appendChild(li);
             } else if (task.category === "Shopping") {
-                shoppingTasks.appendChild(li);
-                hasShoppingTasks = true;
+                shoppingTasks.appendChild(li.cloneNode(true));
+                homeShoppingTasks.appendChild(li);
             }
         });
-
-        document.getElementById("work-heading").style.display = hasWorkTasks ? "block" : "none";
-        document.getElementById("personal-heading").style.display = hasPersonalTasks ? "block" : "none";
-        document.getElementById("shopping-heading").style.display = hasShoppingTasks ? "block" : "none";
-    }
-
-    function showNotification(task) {
-        const notification = new Notification('Task Reminder', {
-            body: `🚀 You have a task due today at ${task.dueTime}!`,
-            icon: '/path/to/icon.png' // Optional: Add an icon for the notification
-        });
-    }
-
-    function setTaskReminder(task) {
-        const now = new Date();
-        const taskDueDate = new Date(task.dueDate);
-        const timeUntilDue = taskDueDate - now;
-
-        if (timeUntilDue > 0) {
-            setTimeout(() => {
-                showNotification(task);
-            }, timeUntilDue);
-        }
     }
 
     addTaskBtn.addEventListener("click", function () {
         const taskText = taskInput.value.trim();
         const taskCategory = categorySelect.value;
         const dueDate = dueDateInput.value;
+        const dueTime = dueTimeInput.value;
 
         if (taskText !== "") {
-            const newTask = { text: taskText, category: taskCategory, completed: false, dueDate: dueDate };
+            const newTask = { text: taskText, category: taskCategory, completed: false, dueDate: dueDate, dueTime: dueTime };
             tasks.push(newTask);
             localStorage.setItem("tasks", JSON.stringify(tasks));
             renderTasks();
             taskInput.value = "";
             dueDateInput.value = "";
-            setTaskReminder(newTask);
+            dueTimeInput.value = "";
         }
     });
 
@@ -137,6 +119,21 @@ document.addEventListener("DOMContentLoaded", function () {
             alert('Notifications are already enabled.');
         }
     });
+
+    // Navigation
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function (event) {
+            event.preventDefault();
+            const sectionId = this.dataset.section;
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        });
+    });
+
+    // Show Home section by default
+    document.getElementById('home').classList.add('active');
 
     renderTasks();
 });
