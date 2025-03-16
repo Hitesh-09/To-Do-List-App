@@ -61,17 +61,38 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("shopping-heading").style.display = hasShoppingTasks ? "block" : "none";
     }
 
+    function showNotification(task) {
+        const notification = new Notification('Task Reminder', {
+            body: `🚀 You have a task due today at ${task.dueTime}!`,
+            icon: '/path/to/icon.png' // Optional: Add an icon for the notification
+        });
+    }
+
+    function setTaskReminder(task) {
+        const now = new Date();
+        const taskDueDate = new Date(task.dueDate);
+        const timeUntilDue = taskDueDate - now;
+
+        if (timeUntilDue > 0) {
+            setTimeout(() => {
+                showNotification(task);
+            }, timeUntilDue);
+        }
+    }
+
     addTaskBtn.addEventListener("click", function () {
         const taskText = taskInput.value.trim();
         const taskCategory = categorySelect.value;
         const dueDate = dueDateInput.value;
 
         if (taskText !== "") {
-            tasks.push({ text: taskText, category: taskCategory, completed: false, dueDate: dueDate });
+            const newTask = { text: taskText, category: taskCategory, completed: false, dueDate: dueDate };
+            tasks.push(newTask);
             localStorage.setItem("tasks", JSON.stringify(tasks));
             renderTasks();
             taskInput.value = "";
             dueDateInput.value = "";
+            setTaskReminder(newTask);
         }
     });
 
@@ -100,6 +121,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 localStorage.setItem("tasks", JSON.stringify(tasks));
                 renderTasks();
             }
+        }
+    });
+
+    document.getElementById('enable-notifications').addEventListener('click', () => {
+        if (Notification.permission !== 'granted') {
+            Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    alert('Notifications enabled!');
+                } else {
+                    alert('Notifications denied!');
+                }
+            });
+        } else {
+            alert('Notifications are already enabled.');
         }
     });
 
