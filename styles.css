@@ -1,74 +1,141 @@
+/* 🌙 Dark Mode Theme */
 body {
-    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #1e1e1e, #2a2a2a);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    padding: 30px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f4f4;
 }
 
-.container {
-    background: white;
+/* 🌟 Container */
+.todo-container {
+    width: 90%;
+    max-width: 600px;
+    background: rgba(255, 255, 255, 0.1);
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
 }
 
+/* 📌 Heading */
 h1 {
-    margin-bottom: 10px;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 3px 3px 10px rgba(255, 255, 255, 0.2);
 }
 
-.input-container {
+/* 📌 Input Section */
+.input-section {
     display: flex;
+    flex-direction: column;
     gap: 10px;
 }
 
-input {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+input,
+select,
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+    transition: 0.3s ease;
+}
+
+input,
+select {
+    background: #333;
+    color: white;
 }
 
 button {
-    background-color: #28a745;
+    background: #007bff;
     color: white;
-    border: none;
-    padding: 8px 12px;
     cursor: pointer;
-    border-radius: 4px;
+    font-weight: bold;
 }
 
 button:hover {
-    background-color: #218838;
+    background: #0056b3;
+    transform: scale(1.03);
 }
 
-ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 10px;
+/* 📝 Task List */
+.task-container {
+    margin-top: 20px;
 }
 
-li {
+.task-category {
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #555;
+    margin-bottom: 10px;
+}
+
+/* 📌 Task Item */
+.task {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    background: #eee;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
+.task:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* ✅ Checkbox */
+.task input[type="checkbox"] {
+    transform: scale(1.2);
+    margin-right: 10px;
+}
+
+/* ✏️ Task Text */
+.task-name {
+    flex-grow: 1;
+    font-size: 1rem;
+}
+
+/* 🔄 Completed Task */
+.task.completed .task-name {
+    text-decoration: line-through;
+    color: gray;
+}
+
+/* 🛠 Task Buttons */
+.task-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.task-buttons button {
     padding: 8px;
-    margin-top: 5px;
-    border-radius: 4px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: 0.2s;
 }
 
-li button {
-    background-color: #dc3545;
-    border: none;
-    color: white;
-    padding: 4px 8px;
-    cursor: pointer;
-    border-radius: 4px;
+.edit-btn {
+    background: #ffc107;
 }
 
-li button:hover {
-    background-color: #c82333;
+.edit-btn:hover {
+    background: #e0a800;
+}
+
+.delete-btn {
+    background: #dc3545;
+}
+
+.delete-btn:hover {
+    background: #b71c1c;
 }
